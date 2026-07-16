@@ -31,12 +31,24 @@ pipeline {
         }
 
         stage('Health Check') {
-    steps {
-        sh '''
-        echo "Checking website health..."
-        curl -I http://localhost
-        '''
+            steps {
+                sh '''
+                echo "Checking website health..."
+                curl -f http://localhost > /dev/null
+                '''
             }
+        }
+    }
+
+    post {
+        failure {
+            sh '''
+            echo "Deployment Failed! Starting Rollback..."
+
+            sudo cp $(ls -t /var/www/html/backup/index-*.html | head -1) /var/www/html/index.html
+
+            echo "Rollback Completed Successfully!"
+            '''
         }
     }
 }
