@@ -9,6 +9,12 @@ pipeline {
             }
         }
 
+        stage('Code Validation') {
+            steps {
+                sh 'tidy -errors -q index.html'
+            }
+        }
+
         stage('Backup') {
             steps {
                 sh '''
@@ -20,9 +26,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh '''
-                sudo cp index.html /var/www/html/
-                '''
+                sh 'sudo cp index.html /var/www/html/'
             }
         }
 
