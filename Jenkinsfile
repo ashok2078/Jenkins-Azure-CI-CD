@@ -30,12 +30,12 @@ pipeline {
             }
         }
 
-        stage('Verify') {
-            steps {
-                sh '''
-                ls -l /var/www/html
-                ls -l /var/www/html/backup
-                '''
+        stage('Health Check') {
+    steps {
+        sh '''
+        echo "Checking website health..."
+        curl -I http://localhost
+        '''
             }
         }
     }
