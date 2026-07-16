@@ -34,7 +34,7 @@ pipeline {
             steps {
                 sh '''
                 echo "Checking website health..."
-                curl -f http://localhost > /dev/null
+                curl -f http://localhost:9999 > /dev/null
                 '''
             }
         }
